@@ -1,6 +1,10 @@
 "use strict";
 
+const initialSpeed = 500;
+
+
 window.addEventListener("load", start);
+
 
 // ******** CONTROLLER ********
 
@@ -46,17 +50,24 @@ let direction='left';
 
 const apples=[];
 
+let gameIsOver = false;
+
+
 function tick() {
-  // setup next tick
-  setTimeout(tick, 500);
+  if(gameIsOver){
+    console.log("Game Over!");
+    return;
+  }
 
-
+  setTimeout(tick, 800);
  
  //remove tail
  if (queue.length > 1) {
   const tail = queue.pop();
   writeToCell(tail.row, tail.col, 0);
 }
+
+
 
 
 
@@ -81,7 +92,7 @@ function tick() {
       case 'right':
         player.col++;
         if(  player.col>9){
-          player.col=9;
+          player.col=0;
         }
         break;
         case 'up':
@@ -97,6 +108,16 @@ function tick() {
         }
         break;
       }
+
+      for (const segment of queue) {
+        if (player.row === segment.row && player.col === segment.col) {
+          // Snake collided with itself, stop the game
+          console.log("Game Over! Snake collided with itself.");
+          gameIsOver=true;
+          return;
+        }
+      }
+    
 
 
   // 
@@ -115,6 +136,7 @@ function tick() {
 
   // display the model in full
   displayBoard();
+
 }
 
 
@@ -153,6 +175,7 @@ const model = [
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 ];
+tick();
 
 function writeToCell(row, col, value,) {
   model[row][col] = value;
@@ -233,3 +256,4 @@ function generateRandomApple(){
 }
 
 generateRandomApple();
+
