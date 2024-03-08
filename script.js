@@ -1,5 +1,5 @@
 "use strict";
-
+//speed of snake
 const initialSpeed = 500;
 
 
@@ -52,7 +52,7 @@ const apples=[];
 
 let gameIsOver = false;
 
-
+//game functionality
 function tick() {
   if(gameIsOver){
     console.log("Game Over!");
@@ -70,7 +70,7 @@ function tick() {
 
 
 
-
+//controls
   if (controls.left) {
     direction = "left";
   } else if (controls.right) {
@@ -120,7 +120,6 @@ function tick() {
     
 
 
-  // 
 
   //add head to queue
   queue.unshift({ row: player.row, col: player.col });
